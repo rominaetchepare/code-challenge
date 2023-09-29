@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario de Registro</title>
+</head>
+<body>
+  <h1>Formulario de Registro</h1>
+  <form id="formulario">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required><br><br>
+
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="apellido" required><br><br>
+
+    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+    <input type="date" id="fechaNacimiento" name="fechaNacimiento" required><br><br>
+
+    <input type="submit" value="Registrar">
+  </form>
+
+  <script>
+   
+    document.getElementById('formulario').addEventListener('submit', function(event) {
+      event.preventDefault(); 
+      
+
+      const nombre = document.getElementById('nombre').value;
+      const apellido = document.getElementById('apellido').value;
+      const fechaNacimiento = document.getElementById('fechaNacimiento').value;
+
+     
+      const datos = {
+        nombre: nombre,
+        apellido: apellido,
+        fechaNacimiento: fechaNacimiento
+      };
+
+      
+      fetch('https://jsonplaceholder.typicode.com/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      })
+      .then(response => response.json())
+      .then(data => {
+        
+        console.log('Respuesta del servidor:', data);
+      })
+      .catch(error => {
+        console.error('Error en la solicitud POST:', error);
+      });
+    });
+  </script>
+</body>
+</html>
